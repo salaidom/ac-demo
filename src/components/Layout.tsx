@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
 
 import AppBar from 'src/components/AppBar'
+import Tree from 'src/components/Tree'
 import File from 'src/components/File'
 
 const useStyles = makeStyles(theme => ({
@@ -26,7 +27,7 @@ const Layout: React.FC<LayoutProps> = () => {
         <Grid container spacing={3}>
           <Grid item xs={12} md={5}>
             <Paper elevation={1} className={classes.paper}>
-              Left content
+              <Tree />
             </Paper>
           </Grid>
           <Grid item xs={12} md={7}>
