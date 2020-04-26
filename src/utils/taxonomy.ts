@@ -2,13 +2,13 @@ import { Taxonomy, TaxonomyType } from 'src/types/taxonomy'
 import { TreeNode } from 'react-treebeard'
 
 export const addTaxonomyFromDataAtParent = (
-  root: Taxonomy[] | null,
+  root: Taxonomy[],
   data: Omit<Taxonomy, 'children'>[],
   parent: string | null
 ) => {
   const newTaxonomies = createTaxonomyArrayFromData(data)
 
-  if (root === null && parent === null) {
+  if (root && root.length === 0 && parent === null) {
     return newTaxonomies
   }
 
@@ -48,7 +48,6 @@ export const updateTreeDataBasedOnTaxonomy = (
   root: Taxonomy[],
   prevData?: TreeNode[]
 ) => {
-  console.log('updateTreeDataBasedOnTaxonomy', root, prevData)
   if (!prevData) {
     return root.map(item => ({
       id: item.id,

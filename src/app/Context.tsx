@@ -2,24 +2,24 @@ import React, { Dispatch, SetStateAction } from 'react'
 import { Taxonomy } from 'src/types/taxonomy'
 
 type SelectedFileContextType = {
-  fileId: string | null
-  setFileId: Dispatch<SetStateAction<string | null>>
+  fileId: string
+  setFileId: Dispatch<SetStateAction<string>>
 }
 
 export const SelectedFileContext = React.createContext<SelectedFileContextType>(
   {
-    fileId: null,
+    fileId: '',
     setFileId: () => {},
   }
 )
 
 type TaxonomyContextType = {
-  taxonomy: Taxonomy[] | null
-  setTaxonomy: Dispatch<SetStateAction<Taxonomy[] | null>>
+  taxonomy: Taxonomy[]
+  setTaxonomy: Dispatch<SetStateAction<Taxonomy[]>>
 }
 
 export const TaxonomyContext = React.createContext<TaxonomyContextType>({
-  taxonomy: null,
+  taxonomy: [],
   setTaxonomy: () => {},
 })
 
