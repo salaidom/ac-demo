@@ -1,10 +1,10 @@
 import React from 'react'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 
 import AppBar from 'src/components/AppBar'
+import File from 'src/components/File'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -31,7 +31,7 @@ const Layout: React.FC<LayoutProps> = () => {
           </Grid>
           <Grid item xs={12} md={7}>
             <Paper elevation={1} className={classes.paper}>
-              Right content
+              <File />
             </Paper>
           </Grid>
         </Grid>
