@@ -2,7 +2,8 @@ import React, { useState, useContext, useEffect } from 'react'
 import { Treebeard, TreeNode } from 'react-treebeard'
 import { useApolloClient } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
-import { TaxonomyContext } from 'src/app/Context'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import { TaxonomyContext, SelectedFileContext } from 'src/app/Context'
 import {
   addTaxonomyFromDataAtParent,
   updateTreeDataBasedOnTaxonomy,
@@ -22,7 +23,9 @@ const initialTreeData: TreeNode[] = []
 
 const Tree: React.FC = () => {
   const apolloClient = useApolloClient()
+  const [init, setInit] = useState<boolean>(true)
   const { taxonomy, setTaxonomy } = useContext(TaxonomyContext)
+  const { setFileId } = useContext(SelectedFileContext)
   const [data, setData] = useState<TreeNode[]>(initialTreeData)
   const [cursor, setCursor] = useState<TreeNode | null>(null)
 
@@ -33,11 +36,12 @@ const Tree: React.FC = () => {
         query: GET_LIST_QUERY,
         variables: { listId: '' },
       })
-      .then(result =>
+      .then(result => {
+        setInit(false)
         setTaxonomy(t =>
           addTaxonomyFromDataAtParent(t, result.data.getList, null)
         )
-      )
+      })
   }, [apolloClient, setTaxonomy])
 
   // recompute data for tree when taxonomy changes
@@ -48,21 +52,34 @@ const Tree: React.FC = () => {
   const onToggle = (node: TreeNode, toggled: boolean) => {
     if (cursor) cursor.active = false
     node.active = true
-    if (node.children) node.toggled = toggled
+    if (node.children) {
+      // this means it is a folder
+      node.toggled = toggled
+      // load data for folders deeper in taxononmy
+      if (node.children.length === 0) {
+        node.loading = true
+        apolloClient
+          .query({
+            query: GET_LIST_QUERY,
+            variables: { listId: node.id },
+          })
+          .then(result => {
+            node.loading = false
+            setTaxonomy(t =>
+              addTaxonomyFromDataAtParent(t, result.data.getList, node.id!)
+            )
+          })
+      }
+    }
+    if (typeof node.children === 'undefined') {
+      // this means it is a file
+      setFileId(node.id!)
+    }
     setCursor(node)
     setData([...data])
-
-    apolloClient
-      .query({
-        query: GET_LIST_QUERY,
-        variables: { listId: node.id },
-      })
-      .then(result =>
-        setTaxonomy(t =>
-          addTaxonomyFromDataAtParent(t, result.data.getList, node.id!)
-        )
-      )
   }
+
+  if (init) return <CircularProgress />
 
   return <Treebeard data={data} onToggle={onToggle} />
 }
