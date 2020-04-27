@@ -1,10 +1,12 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { SelectedFileContext } from 'src/app/Context'
+import { makeStyles } from '@material-ui/core/styles'
 import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
+
+import { SelectedFileContext } from 'src/app/Context'
+import { GET_FILE_QUERY } from 'src/apollo/queries'
+import { Query, QueryGetFileArgs } from 'src/apollo/types'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -12,24 +14,12 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const GET_FILE_QUERY = gql`
-  query GetFile($fileId: String!) {
-    getFile(id: $fileId) {
-      id
-      name
-      text
-    }
-  }
-`
-
 const File: React.FC = () => {
   const classes = useStyles()
   const { fileId } = useContext(SelectedFileContext)
-  const { loading, data, error } = useQuery(GET_FILE_QUERY, {
-    variables: { fileId: fileId },
+  const { loading, data } = useQuery<Query, QueryGetFileArgs>(GET_FILE_QUERY, {
+    variables: { id: fileId },
   })
-
-  console.log('FILE', loading, data, error)
 
   return (
     <div className={classes.container}>
@@ -39,8 +29,10 @@ const File: React.FC = () => {
             <CircularProgress />
           ) : (
             <>
-              <Typography variant="h3">{data.getFile.name}</Typography>
-              <Typography variant="body1">{data.getFile.text}</Typography>
+              <Typography variant="h3">{data && data.getFile.name}</Typography>
+              <Typography variant="body1">
+                {data && data.getFile.text}
+              </Typography>
             </>
           )}
         </>

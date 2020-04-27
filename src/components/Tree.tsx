@@ -8,16 +8,8 @@ import {
   addTaxonomyFromDataAtParent,
   updateTreeDataBasedOnTaxonomy,
 } from 'src/utils/taxonomy'
-
-const GET_LIST_QUERY = gql`
-  query GetList($listId: String!) {
-    getList(id: $listId) {
-      id
-      name
-      type
-    }
-  }
-`
+import { GET_LIST_QUERY } from 'src/apollo/queries'
+import { Query, QueryGetListArgs } from 'src/apollo/types'
 
 const initialTreeData: TreeNode[] = []
 
@@ -32,9 +24,9 @@ const Tree: React.FC = () => {
   // get initial data for first level taxonomy
   useEffect(() => {
     apolloClient
-      .query({
+      .query<Query, QueryGetListArgs>({
         query: GET_LIST_QUERY,
-        variables: { listId: '' },
+        variables: { id: '' },
       })
       .then(result => {
         setInit(false)
@@ -59,9 +51,9 @@ const Tree: React.FC = () => {
       if (node.children.length === 0) {
         node.loading = true
         apolloClient
-          .query({
+          .query<Query, QueryGetListArgs>({
             query: GET_LIST_QUERY,
-            variables: { listId: node.id },
+            variables: { id: node.id },
           })
           .then(result => {
             node.loading = false
