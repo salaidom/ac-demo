@@ -1,43 +1,40 @@
 import React, { useContext } from 'react'
 import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { makeStyles } from '@material-ui/core/styles'
 import { useQuery } from '@apollo/react-hooks'
 
-import { SelectedFileContext } from 'src/app/Context'
+import { FilesContext } from 'src/app/Context'
 import { GET_FILE_QUERY } from 'src/apollo/queries'
 import { Query, QueryGetFileArgs } from 'src/apollo/types'
 
 const useStyles = makeStyles(theme => ({
   container: {
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
     minHeight: 300,
   },
-  toolbar: {
-    textAlign: 'right',
+  empty: {
+    width: '100%',
+    textAlign: 'center',
   },
 }))
 
 const File: React.FC = () => {
   const classes = useStyles()
-  const { fileId, setFileId } = useContext(SelectedFileContext)
+  const { selectedFileId } = useContext(FilesContext)
   const { loading, data } = useQuery<Query, QueryGetFileArgs>(GET_FILE_QUERY, {
-    variables: { id: fileId },
+    variables: { id: selectedFileId },
   })
 
   return (
     <div className={classes.container}>
-      {fileId ? (
+      {selectedFileId ? (
         <>
           {loading ? (
             <CircularProgress />
           ) : (
             <>
-              <div className={classes.toolbar}>
-                <Button onClick={() => setFileId('')} variant="outlined">
-                  Close File
-                </Button>
-              </div>
               <Typography variant="h3">{data && data.getFile.name}</Typography>
               <Typography variant="body1">
                 {data && data.getFile.text}
@@ -46,7 +43,9 @@ const File: React.FC = () => {
           )}
         </>
       ) : (
-        <Typography variant="h3">No file is selected</Typography>
+        <Typography variant="subtitle1" className={classes.empty}>
+          No file is selected
+        </Typography>
       )}
     </div>
   )

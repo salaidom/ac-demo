@@ -1,9 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Treebeard, TreeNode } from 'react-treebeard'
 import { useApolloClient } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { TaxonomyContext, SelectedFileContext } from 'src/app/Context'
+import { TaxonomyContext, FilesContext, HistoryContext } from 'src/app/Context'
 import {
   addTaxonomyFromDataAtParent,
   updateTreeDataBasedOnTaxonomy,
@@ -17,7 +16,8 @@ const Tree: React.FC = () => {
   const apolloClient = useApolloClient()
   const [init, setInit] = useState<boolean>(true)
   const { taxonomy, setTaxonomy } = useContext(TaxonomyContext)
-  const { setFileId } = useContext(SelectedFileContext)
+  const { setSelectedFileId, setOpenFileIds } = useContext(FilesContext)
+  const { setHistoryIds } = useContext(HistoryContext)
   const [data, setData] = useState<TreeNode[]>(initialTreeData)
   const [cursor, setCursor] = useState<TreeNode | null>(null)
 
@@ -65,7 +65,17 @@ const Tree: React.FC = () => {
     }
     if (typeof node.children === 'undefined') {
       // this means it is a file
-      setFileId(node.id!)
+      setSelectedFileId(node.id!)
+      setOpenFileIds(openIds =>
+        openIds.indexOf(node.id!) === -1 ? [...openIds, node.id!] : openIds
+      )
+      setHistoryIds(historyIds => {
+        let newHistory =
+          historyIds.indexOf(node.id!) === -1
+            ? [...historyIds, node.id!]
+            : historyIds
+        return newHistory.length > 5 ? newHistory.slice(1) : newHistory
+      })
     }
     setCursor(node)
     setData([...data])

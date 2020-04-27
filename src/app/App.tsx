@@ -7,7 +7,7 @@ import { persistCache } from 'apollo-cache-persist'
 
 import theme from 'src/config/theme'
 import Layout from 'src/components/Layout'
-import { SelectedFileContext, TaxonomyContext } from './Context'
+import { FilesContext, TaxonomyContext, HistoryContext } from './Context'
 import { Taxonomy } from '../types/taxonomy'
 import { PersistentStorage, PersistedData } from 'apollo-cache-persist/types'
 
@@ -17,7 +17,9 @@ const App: React.FC = props => {
   const [apolloClient, setApolloClient] = useState<
     ApolloClient<unknown> | undefined
   >(undefined)
-  const [fileId, setFileId] = useState<string>('')
+  const [selectedFileId, setSelectedFileId] = useState<string>('')
+  const [openFileIds, setOpenFileIds] = useState<string[]>([])
+  const [historyIds, setHistoryIds] = useState<string[]>([])
   const [taxonomy, setTaxonomy] = useState<Taxonomy[]>([])
 
   useEffect(() => {
@@ -42,11 +44,25 @@ const App: React.FC = props => {
   return (
     <ThemeProvider theme={theme}>
       <ApolloProvider client={apolloClient}>
-        <SelectedFileContext.Provider value={{ fileId, setFileId }}>
-          <TaxonomyContext.Provider value={{ taxonomy, setTaxonomy }}>
-            <Layout />
-          </TaxonomyContext.Provider>
-        </SelectedFileContext.Provider>
+        <FilesContext.Provider
+          value={{
+            selectedFileId,
+            setSelectedFileId,
+            openFileIds,
+            setOpenFileIds,
+          }}
+        >
+          <HistoryContext.Provider
+            value={{
+              historyIds,
+              setHistoryIds,
+            }}
+          >
+            <TaxonomyContext.Provider value={{ taxonomy, setTaxonomy }}>
+              <Layout />
+            </TaxonomyContext.Provider>
+          </HistoryContext.Provider>
+        </FilesContext.Provider>
       </ApolloProvider>
     </ThemeProvider>
   )

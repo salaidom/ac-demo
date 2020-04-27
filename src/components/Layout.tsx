@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import AppBar from 'src/components/AppBar'
 import Tree from 'src/components/Tree'
-import File from 'src/components/File'
+import RightPane from 'src/components/RightPane'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -32,7 +32,7 @@ const Layout: React.FC<LayoutProps> = () => {
           </Grid>
           <Grid item xs={12} md={7}>
             <Paper elevation={1} className={classes.paper}>
-              <File />
+              <RightPane />
             </Paper>
           </Grid>
         </Grid>
