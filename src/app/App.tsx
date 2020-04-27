@@ -35,7 +35,6 @@ const App: React.FC = props => {
     }).then(() => {
       setApolloClient(client)
     })
-    return () => {}
   }, [])
 
   if (apolloClient === undefined) return <div>Loading data from cache...</div>
