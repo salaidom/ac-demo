@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { makeStyles } from '@material-ui/core/styles'
 import { useQuery } from '@apollo/react-hooks'
@@ -12,11 +13,14 @@ const useStyles = makeStyles(theme => ({
   container: {
     minHeight: 300,
   },
+  toolbar: {
+    textAlign: 'right',
+  },
 }))
 
 const File: React.FC = () => {
   const classes = useStyles()
-  const { fileId } = useContext(SelectedFileContext)
+  const { fileId, setFileId } = useContext(SelectedFileContext)
   const { loading, data } = useQuery<Query, QueryGetFileArgs>(GET_FILE_QUERY, {
     variables: { id: fileId },
   })
@@ -29,6 +33,11 @@ const File: React.FC = () => {
             <CircularProgress />
           ) : (
             <>
+              <div className={classes.toolbar}>
+                <Button onClick={() => setFileId('')} variant="outlined">
+                  Close File
+                </Button>
+              </div>
               <Typography variant="h3">{data && data.getFile.name}</Typography>
               <Typography variant="body1">
                 {data && data.getFile.text}
