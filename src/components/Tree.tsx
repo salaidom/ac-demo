@@ -9,6 +9,7 @@ import {
 } from 'src/utils/taxonomy'
 import { GET_LIST_QUERY } from 'src/apollo/queries'
 import { Query, QueryGetListArgs } from 'src/apollo/types'
+import treeTheme from 'src/config/treeTheme'
 
 const initialTreeData: TreeNode[] = []
 
@@ -83,7 +84,7 @@ const Tree: React.FC = () => {
 
   if (init) return <CircularProgress />
 
-  return <Treebeard data={data} onToggle={onToggle} />
+  return <Treebeard data={data} onToggle={onToggle} style={treeTheme} />
 }
 
 export default Tree

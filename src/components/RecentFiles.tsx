@@ -24,6 +24,7 @@ const RecentFiles: React.FC<RecentFilesProps> = () => {
       <Typography variant="caption">Recent files:</Typography>
       {historyIds.map(fileId => (
         <Chip
+          key={fileId}
           className={classes.chip}
           label={fileId}
           variant="outlined"

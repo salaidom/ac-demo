@@ -28,6 +28,7 @@ const OpenFiles: React.FC = () => {
       <Typography variant="body1">Open files:</Typography>
       {openFileIds.map(fileId => (
         <Chip
+          key={fileId}
           className={classes.chip}
           label={fileId}
           color={fileId === selectedFileId ? 'primary' : 'default'}
