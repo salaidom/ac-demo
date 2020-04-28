@@ -16,9 +16,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-type LayoutProps = {}
-
-const Layout: React.FC<LayoutProps> = () => {
+const Layout: React.FC = () => {
   const classes = useStyles()
   return (
     <>

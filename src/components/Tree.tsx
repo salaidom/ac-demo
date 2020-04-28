@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { Treebeard, TreeNode } from 'react-treebeard'
 import { useApolloClient } from '@apollo/react-hooks'
 import CircularProgress from '@material-ui/core/CircularProgress'
+
 import { TaxonomyContext, FilesContext, HistoryContext } from 'src/app/Context'
 import {
   addTaxonomyFromDataAtParent,

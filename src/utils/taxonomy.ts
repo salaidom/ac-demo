@@ -58,7 +58,6 @@ export const updateTreeDataBasedOnTaxonomy = (
   }
   root.forEach((item, index) => {
     const pData = prevData[index]
-    // previous data does not exists
     if (!pData) {
       prevData[index] = {
         id: item.id,

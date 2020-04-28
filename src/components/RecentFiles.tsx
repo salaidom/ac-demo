@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import Typography from '@material-ui/core/Typography'
 import Chip from '@material-ui/core/Chip'
 import { makeStyles } from '@material-ui/core/styles'
+
 import { FilesContext, HistoryContext } from 'src/app/Context'
 
 const useStyles = makeStyles(theme => ({
@@ -13,9 +14,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-type RecentFilesProps = {}
-
-const RecentFiles: React.FC<RecentFilesProps> = () => {
+const RecentFiles: React.FC = () => {
   const classes = useStyles()
   const { setSelectedFileId, setOpenFileIds } = useContext(FilesContext)
   const { historyIds, setHistoryIds } = useContext(HistoryContext)

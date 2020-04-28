@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import Chip from '@material-ui/core/Chip'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
+
 import { FilesContext } from 'src/app/Context'
 
 const useStyles = makeStyles(theme => ({

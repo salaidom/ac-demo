@@ -3,9 +3,7 @@ import { default as MaterialAppBar } from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 
-type AppBarProps = {}
-
-const AppBar: React.FC<AppBarProps> = () => {
+const AppBar: React.FC = () => {
   return (
     <MaterialAppBar position="static">
       <Toolbar>

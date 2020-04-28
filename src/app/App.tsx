@@ -4,17 +4,15 @@ import ApolloClient, { NormalizedCacheObject } from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { persistCache } from 'apollo-cache-persist'
+import { PersistentStorage, PersistedData } from 'apollo-cache-persist/types'
 
 import theme from 'src/config/theme'
 import Layout from 'src/components/Layout'
 import { FilesContext, TaxonomyContext, HistoryContext } from './Context'
-import { Taxonomy } from '../types/taxonomy'
-import { PersistentStorage, PersistedData } from 'apollo-cache-persist/types'
 import useLocalStorageState from 'src/hooks/useLocalStorageState'
+import { Taxonomy } from '../types/taxonomy'
 
-// eslint-disable-next-line
-const App: React.FC = props => {
-  // eslint-disable-next-line
+const App: React.FC = () => {
   const [apolloClient, setApolloClient] = useState<
     ApolloClient<unknown> | undefined
   >(undefined)
@@ -52,7 +50,8 @@ const App: React.FC = props => {
     })
   }, [])
 
-  if (apolloClient === undefined) return <div>Loading data from cache...</div>
+  if (apolloClient === undefined)
+    return <div>Loading apollo data from local storage...</div>
 
   return (
     <ThemeProvider theme={theme}>
