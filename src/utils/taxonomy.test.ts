@@ -1,4 +1,3 @@
-import React from 'react'
 import { Taxonomy } from 'src/types/taxonomy'
 import { addTaxonomyFromDataAtParent } from './taxonomy'
 
