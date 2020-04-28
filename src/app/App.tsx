@@ -10,6 +10,7 @@ import Layout from 'src/components/Layout'
 import { FilesContext, TaxonomyContext, HistoryContext } from './Context'
 import { Taxonomy } from '../types/taxonomy'
 import { PersistentStorage, PersistedData } from 'apollo-cache-persist/types'
+import useLocalStorageState from 'src/hooks/useLocalStorageState'
 
 // eslint-disable-next-line
 const App: React.FC = props => {
@@ -17,10 +18,22 @@ const App: React.FC = props => {
   const [apolloClient, setApolloClient] = useState<
     ApolloClient<unknown> | undefined
   >(undefined)
-  const [selectedFileId, setSelectedFileId] = useState<string>('')
-  const [openFileIds, setOpenFileIds] = useState<string[]>([])
-  const [historyIds, setHistoryIds] = useState<string[]>([])
-  const [taxonomy, setTaxonomy] = useState<Taxonomy[]>([])
+  const [selectedFileId, setSelectedFileId] = useLocalStorageState<string>(
+    'selectedFileId',
+    ''
+  )
+  const [openFileIds, setOpenFileIds] = useLocalStorageState<string[]>(
+    'openFileIds',
+    []
+  )
+  const [historyIds, setHistoryIds] = useLocalStorageState<string[]>(
+    'historyIds',
+    []
+  )
+  const [taxonomy, setTaxonomy] = useLocalStorageState<Taxonomy[]>(
+    'taxonomy',
+    []
+  )
 
   useEffect(() => {
     const cache = new InMemoryCache()
