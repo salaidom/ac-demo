@@ -1,44 +1,37 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a demo application for a testing task.
 
-## Available Scripts
+## Running project locally in development
 
-In the project directory, you can run:
+In order to get it running locally on your computer:
 
-### `yarn start`
+1. Git clone this repo
+1. Make sure you are on `master` branch
+1. Install dependencies with `yarn install`
+1. Copy `.env.dist` file and rename it to `.env`
+1. Put the URL of the apollo server into `.env` file
+1. Run `yarn start`
+1. You are good to go...
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Building project
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Since the project is based on `Create React App` just run the following command to build production ready application:
 
-### `yarn test`
+- `yarn build`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## This codebase showcases
 
-### `yarn build`
+- use of `git flow` (just basics since it is one man simple task)
+- ability to write tests and use testing frameworks
+- ability to use `apollo gprahql` with cache and persistent storage
+- incremental addition of functionality based on commit history
+- use of `react context and providers` to manage application state
+- use of latest advancements in react ecosystem like `react hooks` (as of April 2020)
+- use of hooks to simplify application state persistence for state managed outside apollo
+- use of `typescript` for static analysis of the code and code qulaity improvment
+- application configuration with config files and `.env` file
+- improved tooling with `eslint` and `prettier` cnofguration
+- use of third party libraries and their integration
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Note
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Since this is just a demo task, the showcase of functionality / skills mentioned above is selective and it might happen that seemingly related tasks are solved using different approach but that is just for showcase purposes. Production application codebase with many contributors would of course involve much more tooling, processes, organisation, code reviews, functionality etc.
