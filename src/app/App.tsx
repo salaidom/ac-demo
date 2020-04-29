@@ -34,8 +34,6 @@ const App: React.FC = () => {
     []
   )
 
-  console.log('APOLLO URL', config.apolloUrl)
-
   useEffect(() => {
     const cache = new InMemoryCache()
     const client = new ApolloClient({
