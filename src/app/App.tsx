@@ -7,6 +7,7 @@ import { persistCache } from 'apollo-cache-persist'
 import { PersistentStorage, PersistedData } from 'apollo-cache-persist/types'
 
 import theme from 'src/config/theme'
+import config from 'src/config/config'
 import Layout from 'src/components/Layout'
 import { FilesContext, TaxonomyContext, HistoryContext } from './Context'
 import useLocalStorageState from 'src/hooks/useLocalStorageState'
@@ -33,11 +34,13 @@ const App: React.FC = () => {
     []
   )
 
+  console.log('APOLLO URL', config.apolloUrl)
+
   useEffect(() => {
     const cache = new InMemoryCache()
     const client = new ApolloClient({
       cache,
-      uri: 'https://react-test.atlasconsulting.cz/',
+      uri: config.apolloUrl,
     })
 
     persistCache({
